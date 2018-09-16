@@ -1,23 +1,57 @@
 <mino-alert>
-  <div class="alert {type === 'dismiss'? 'alert-close': ''} {type === 'auto-dismiss'? 'alert-auto': ''}"
-   onclick={type === 'dismiss' ? () => dismissAlert(e): ''}>{message}</div>  
-  <style>
+  <div class="alert {type === 'dismiss'? 'alert-close': ''} {type === 'auto-dismiss'? 'alert-auto': ''} {class}"
+   onclick={type === 'dismiss' ? () => dismissAlert(e): ''} >{message}</div>  
+  <style>    
     .alert{
-      border: 1px solid #555;
-      border-radius: 0.15rem;
-      padding: 0.45em 0.65rem;
+      border: 1px solid #ccc;
+      border-radius: 0.2rem;
+      padding: 0.5em 0.675rem;
       position: relative;
-      display: inline;
+      display: inline;    
+      margin-bottom: 1rem;  
     }
 
     .alert-close {
       cursor: pointer;  
     }
+
+    .alert-block{
+      display:block;
+    }
+
+    .light{
+      background-color: #EEF9ED;
+      color: #162115;
+    }
+
+    .warning {
+      background-color: #F45B69;
+      color: #EEF9ED;
+    }
+
+    .success{
+      background-color: #268E47;
+      color: #EEF9ED;
+    }
+
+    .primary{
+      background-color: #456990;
+      color: #EEF9ED;
+    }
+
+    .dark{
+      background-color: #162115;
+      color: #EEF9ED;
+    }
+
+
   </style>
   <script>  
     this.type = opts.type;
     this.message = opts.message;
     this.stay = opts.stay;
+    this.class = opts.class;
+    this.display = opts.display;
     var self = this;
 
     this.on('mount', function(){
@@ -25,6 +59,10 @@
       
       if(this.type === "auto-dimiss"){
         this.autoDismiss();
+      }
+
+      if(this.display !== ""){
+        this.root.childNodes[0].style.display = this.display;        
       }
     });      
 
