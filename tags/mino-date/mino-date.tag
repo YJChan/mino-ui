@@ -1,10 +1,10 @@
 <mino-date>
-  <input type="text" ref="{rname}" onclick="{() => renderCalendar(this)}" value="{date}"/>
+  <input type="text" ref="{rname}" onclick="{() => renderCalendar()}" value="{date}"/><br/>
   <div if={render} class="{ type !== 'modal'? 'calendar': 'calendar-modal'}">
-    <div class="dark title-wrapper">
-      <button class="month-navigator" onclick={() => minodate.prevMonth()}>prev</button>
+    <div class="title-wrapper">
+      <mino-btn class="{theme} month-navigator" onclick="{() => minodate.prevMonth()}" text="&#8249;"></mino-btn>
       <div class="month-title">{minodate.getMonthName(minodate.month)}</div>
-      <button class="month-navigator" onclick={() => minodate.nextMonth()}>next</button>      
+      <mino-btn class="{theme} month-navigator" onclick="{() => minodate.nextMonth()}" text="&#8250;"></mino-btn>      
     </div>
     <div class="display-wrapper">
       <span ref="displayDate">
@@ -13,26 +13,151 @@
     </div>
     <div class="month-wrapper">
       <div class="week-wrapper" each={week in weeks}>
-        <mino-week week={week} parentname={rname}></mino-week>        
+        <mino-week week={week} parentname={rname} theme={theme}></mino-week>        
+      </div>
+    </div>
+    <div>
+      <div class="action-wrapper {theme}" onclick="{() => clearSelection()}">
+        clear        
+      </div>
+      <div class="action-wrapper {theme}" onclick="{() => todaySelection()}">
+        today
+      </div>
+      <div class="action-wrapper {theme}" onclick="{() => renderCalendar()}">
+        close
       </div>
     </div>
   </div>
   <style>
-    .calendar{
-      border: 0.15em solid #ddd;
-      display: inline-block;
-      top: 40%;
-      left: 40%;
-      position: absolute;
+    @media (min-width: 320px) and (max-width: 480px) { 
+      .calendar-modal{
+        border: 0.15em solid #ddd;
+        display: inline-block;     
+        position: absolute;
+        background: #f3f3f3;        
+        border-radius: 0.25em;
+        height: auto;
+        margin: 16px;        
+        top: 10%;
+        left: 0;
+        width: 90%;
+      }
+
+      .calendar{
+        border: 0.15em solid #ddd;
+        display: inline-block;     
+        position: absolute;
+        background: #f3f3f3;        
+        border-radius: 0.25em;
+        height: 360px;
+        margin: 0px -25px 0px 0px;                
+        width: 350px;
+        z-index: 999;
+      }
+
+      .month-title{
+        width: 62.5%;
+        display: inline-block;
+        text-align:center;
+      }
+    }
+    
+    @media (min-width: 768px) and (max-width: 1024px) {
+      .calendar-modal{
+        border: 0.15em solid #ddd;
+        display: inline-block;     
+        position: absolute;
+        background: #f3f3f3;        
+        border-radius: 0.25em;
+        height: auto;
+        margin: 25px;        
+        top: 0;
+        left: 6%;
+        width: 80%;
+      }
+
+      .calendar{
+        border: 0.15em solid #ddd;
+        display: inline-block;     
+        position: absolute;
+        background: #f3f3f3;        
+        border-radius: 0.25em;
+        height: 360px;
+        margin: 0px -25px 0px 0px;                
+        width: 350px;
+        z-index: 999;
+      }
+      
+      .month-title{
+        width: 63%;
+        display: inline-block;
+        text-align:center;
+      }
+    }
+    
+    @media (min-width: 1025px) and (max-width: 1920px) {
+      .calendar{
+        border: 0.15em solid #ddd;
+        display: inline-block;     
+        position: absolute;
+        background: #f3f3f3;        
+        border-radius: 0.25em;
+        height: 360px;
+        margin: 0px -25px 0px 0px;                
+        width: 350px;
+        z-index: 999;
+      }
+
+      .calendar-modal{
+        border: 0.15em solid #ddd;
+        display: inline-block;     
+        position: absolute;
+        background: #f3f3f3;        
+        border-radius: 0.25em;
+        height: 360px;
+        margin: 25px;        
+        top: 10%;
+        left: 35%;
+        width: 350px;
+      }
+
+      .month-title{
+        width: 63%;
+        display: inline-block;
+        text-align:center;
+      }
     }
 
-    .calendar-modal{
-      border: 0.15em solid #ddd;
-      box-shadow: 0px 0px 2px 2px #555;
+    .action-wrapper{
+      box-sizing: border-box;
       display: inline-block;
-      top: 40%;
-      left: 40%;
-      position: absolute;
+      width: 32.5%;
+      padding: 8px;
+      text-decoration: none;
+      color: inherit;
+      border: 0;
+      background: transparent;
+      text-align: center;
+      cursor: pointer;
+    }   
+
+    .action-wrapper:hover{
+      background: #ddd;
+      color: #161125;
+    }
+
+    input{
+      display: inline;      
+      padding: 0.2rem 0.45rem;
+      font-size: 1rem;
+      line-height: 1.5;
+      color: #162115;
+      background-color: #fff;
+      background-clip: padding-box;
+      border: 1px solid #ced4da;
+      border-radius: 0.2rem;
+      transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+      margin: 5px;
     }
 
     .title-wrapper{
@@ -45,36 +170,43 @@
 
     .month-wrapper{      
       display:inline-block;
+      width: 100%;
     }
 
     .week-wrapper{
-      width: auto;
+      width: 98%;
       height:auto;
       display:block;
-    }
-
-    .month-title{
-      width: 61.5%;
-      display: inline-block;
-      text-align:center;
+      padding: 1%;
     }
 
     .month-navigator{
-      width:18%;
+      width:17.5%;
     }
 
-    .day-wrapper{
-      cursor:pointer;
-      width:35px; 
-      height:35px;
-      border: 0.1em solid #ddd; 
-      display: inline-block; 
-      text-align:center;
-      vertical-align:middle;
+    .light{
+      background-color: #EEF9ED;
+      color: #162115;
     }
 
-    .not-in-month{
-      color: #bbb;
+    .warning {
+      background-color: #F45B69;
+      color: #EEF9ED;
+    }
+
+    .success{
+      background-color: #268E47;
+      color: #EEF9ED;
+    }
+
+    .primary{
+      background-color: #456990;
+      color: #EEF9ED;
+    }
+
+    .dark{
+      background-color: #162115;
+      color: #EEF9ED;
     }
   </style>
   <script type="text/javascript" src="./mino-date-observer.js"></script>
@@ -89,7 +221,7 @@
     this.daysOfMonth = 31;
     this.weeks = [];
     this.render = false;
-    
+    this.theme = opts.theme !== undefined? opts.theme : "primary";
     this.options = {
       weekStartDay: opts.weekStartDay === undefined? opts.weekStartDay: 'SUN',
       displayType: opts.displayType === undefined? opts.displayType: 'MONTH',
@@ -140,8 +272,7 @@
       }else{
         var tmpDateObj = new Date(this.date);        
         this.minodate.setSelected(tmpDateObj.getDate(), tmpDateObj.getMonth(), tmpDateObj.getFullYear());        
-      }
-      
+      }      
     });    
 
     this.on('update', function(){
@@ -233,7 +364,17 @@
       this.minodate.setSelected(dtObj.day, dtObj.month, dtObj.year);
       this.renderCalendar();      
     }
+
+    todaySelection(){
+      this.minodate.setSelected(this.minodate.todayDate.getDate(), this.minodate.todayDate.getMonth(), this.minodate.todayDate.getFullYear());
+      this.renderCalendar();
+    }
     
+    clearSelection(){
+      this.date = "";
+      this.renderCalendar();
+    }
+
     this.minodate = {
       day : new Date().getDate(),
       month: new Date().getMonth(),
