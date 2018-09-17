@@ -22,7 +22,7 @@
     background-color: #456990;
   }
   </style>
-  <script>
+  <script>    
     this.week = opts.week;
     this.day = opts.day;
     this.month = opts.month;
@@ -34,8 +34,8 @@
 
     setCalendarDate(){
       this.selected = true;
-      this.update();
-      riot.minoDateObserver.trigger('selectedDate', {
+      this.update();      
+      this.parent.setMonthDay({
         year: this.year,
         month: this.month,
         day: this.day
@@ -49,6 +49,7 @@
         self.update();
       }    
     });    
+    
     
   </script>
 </mino-day>

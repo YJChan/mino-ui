@@ -4,7 +4,11 @@
 <style>
 
 </style>
-<script>
+<script>  
   this.week = opts.week;
+
+  setMonthDay(dtObj){
+    this.parent.setSelectedDate(dtObj);
+  }
 </script>
 </mino-week>

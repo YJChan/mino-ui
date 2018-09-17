@@ -1,5 +1,5 @@
 <mino-date>
-  <input type="text" ref="{name}" onclick={() => renderCalendar(this)} value="{minodate.showDate.long}"/>
+  <input type="text" ref="{rname}" onclick="{() => renderCalendar(this)}" value="{date}"/>
   <div if={render} class="{ type !== 'modal'? 'calendar': 'calendar-modal'}">
     <div class="dark title-wrapper">
       <button class="month-navigator" onclick={() => minodate.prevMonth()}>prev</button>
@@ -8,12 +8,12 @@
     </div>
     <div class="display-wrapper">
       <span ref="displayDate">
-        {minodate.showDate.long === "" ? minodate.getDate(): minodate.showDate.long }
+        {date === "" ? minodate.showDate.long : date}
       </span>
     </div>
     <div class="month-wrapper">
       <div class="week-wrapper" each={week in weeks}>
-        <mino-week week={week}></mino-week>        
+        <mino-week week={week} parentname={rname}></mino-week>        
       </div>
     </div>
   </div>
@@ -83,18 +83,19 @@
     this.day = opts.day !== undefined? opts.day: new Date().getDate();
     this.month = opts.month !== undefined ? opts.month: new Date().getMonth();
     this.year = opts.year !== undefined? opts.year: new Date().getFullYear();
+    this.rname = opts.rname !== undefined? opts.rname: '';    
+    this.date = opts.date !== undefined? opts.date: '';    
+    this.format = opts.format !== undefined? opts.format : "long";
+    this.daysOfMonth = 31;
+    this.weeks = [];
+    this.render = false;
+    
     this.options = {
       weekStartDay: opts.weekStartDay === undefined? opts.weekStartDay: 'SUN',
       displayType: opts.displayType === undefined? opts.displayType: 'MONTH',
       format: opts.format !== undefined? opts.format : "long"
-    };
-    //this.date = new Date();
-    this.monthStartWeekDay = 0;
-    this.daysOfMonth = 31;
-    this.weeks = [];
-    this.render = false;
-    this.format = opts.format !== undefined? opts.format : "long";
-    this.name = opts.name;
+    };        
+    
     riot.minoDateObserver = new minoDateObserver();
     var self = this;
 
@@ -132,18 +133,29 @@
       this.computeCalendar();
     });
 
-    this.on('mount', function(){    
-      this.minodate.setSelected(this.minodate.day, this.minodate.month, this.minodate.year);
+    this.on('mount', function(){
+      // set date according to date format
+      if(this.date === ""){
+        this.minodate.setSelected(this.minodate.day, this.minodate.month, this.minodate.year);
+      }else{
+        var tmpDateObj = new Date(this.date);        
+        this.minodate.setSelected(tmpDateObj.getDate(), tmpDateObj.getMonth(), tmpDateObj.getFullYear());        
+      }
+      
     });    
 
-    this.on('update', function(riot_id){
+    this.on('update', function(){
       this.computeCalendar();       
     });
     
-    initMinoDate(){      
-      this.minodate.init(this.day, this.month, this.year, this.options);
+    initMinoDate(){
+      var initDateType = 0;
+      if(this.date !== ""){
+        initDateType = 1;
+      }
+      this.minodate.init(this.day, this.month, this.year, this.options, initDateType, this.date);
     }
-
+    
     renderCalendar(){      
       if(this.render){
         this.render = false;
@@ -152,7 +164,7 @@
       }
       this.update();
     }
-
+    
     computeCalendar(){
       this.weeks = [];
       var visible = false;
@@ -216,12 +228,11 @@
       }
       //console.log(this.weeks);
     }
-
-    //observable 
-    riot.minoDateObserver.on('selectedDate', function(dtObj){
-      self.renderCalendar();
-      self.minodate.setSelected(dtObj.day, dtObj.month, dtObj.year);
-    });
+    
+    setSelectedDate(dtObj){
+      this.minodate.setSelected(dtObj.day, dtObj.month, dtObj.year);
+      this.renderCalendar();      
+    }
     
     this.minodate = {
       day : new Date().getDate(),
@@ -241,26 +252,29 @@
         long: ""
       },
       format: "long",
-      init: function(day, month, year, options){
+      init: function(day, month, year, options, initDateType, date=null){
         this.day = day;
         this.month = month;
         this.year = year;
         this.todayDate = new Date();
-        this.dte = new Date(year, month, day);       
+        if(initDateType === 1){
+          this.dte = new Date(date);
+        }else{
+          this.dte = new Date(year, month, day);       
+        }
         this.weekStartDay = options.weekStartDay;
         this.displayType = options.displayType;
         this.daysOfMonth = this.dte.getDate();
         this.selectedDate = null;
-        this.format = options.format;
-        self.date = this.dte;
+        this.format = options.format;        
       },
       getDate: function(format){
-        if(format === "short"){
-          return this.todayDate.getMonth() + "/" + this.todayDate.getDate() + "/" + this.todayDate.getFullYear();
+        if(format === "iso"){
+          return this.formatDate(this.todayDate, "iso");
         } else if (format === "short") {
-          return this.todayDate.getDate() + "-" + this.todayDate.getMonth() + "-" + this.todayDate.getFullYear();
+          return this.formatDate(this.todayDate, "short");
         }else{        
-          return this.getMonthName(this.todayDate.getMonth()) + " " + this.todayDate.getDate() + " " + this.todayDate.getFullYear();
+          return this.formatDate(this.todayDate, "long");
         }
       },
       setDate: function(day, month, year){
@@ -273,32 +287,22 @@
         this.selectedDate = new Date(year, month, day);
         this.day = day;
         this.month = month;
-        this.year = year;
-        this.showDate.iso = this.selectedDate.getFullYear() + "-" + this.selectedDate.getMonth() + "-" + this.selectedDate.getDate();
-        this.showDate.short = this.selectedDate.getMonth() + "/" + this.selectedDate.getDate() + "/" + this.selectedDate.getFullYear();
-        this.showDate.long = this.getMonthName(this.selectedDate.getMonth()) + " " + this.selectedDate.getDate() + " " + this.selectedDate.getFullYear();
-        
-        if(this.format === "short"){
-          //self.refs.inpDate.value = this.showDate.short;
-          self.update();
-          //this.dte = this.showDate.short;        
-        }else if(this.format === "iso"){
-          //self.refs.inpDate.value = this.showDate.iso;
-          self.update();
-          //this.dte = this.showDate.iso;          
-        }else{
-          //self.refs.inpDate.value = this.showDate.long;
-          for(var key in self.refs){
-            if(self.refs[key] === self.name){
-             self.refs[key].value = this.showDate.long; 
-            }
-          }
-          self.update();
-          //this.dte = this.showDate.long;          
-        }
+        this.year = year;         
+        this.showDate.iso = this.formatDate(this.selectedDate, "iso");
+        this.showDate.short = this.formatDate(this.selectedDate, "short");
+        this.showDate.long = this.formatDate(this.selectedDate, "long");
+        self.update();
         if(self.refs.displayDate !== undefined){
           self.refs.displayDate.innerHTML = this.showDate.long !== ""? this.showDate.long: this.getDate();
-        }              
+        }
+        if(self.format === "iso"){
+          self.date = this.showDate.iso;
+        }else if(self.format === "short"){
+          self.date = this.showDate.short;
+        }else{
+          self.date = this.showDate.long;
+        }
+        self.update();
         //observable
         riot.minoDateObserver.trigger('selectedActive', {day:day});
       },
@@ -346,6 +350,21 @@
           "July", "August", "September", "October", "November", "December"
         ];
         return monthNames[month];
+      },
+      formatDate: function(date, format=null){
+        var f = format === null? this.format: format;
+        var month = date.getMonth();
+        var day = date.getDate();
+        var year = date.getFullYear();
+        if(f === "iso"){
+          month = parseInt(month) + 1;
+          return year + "-" + month + "-" + day;
+        }else if(f === "short"){
+          month = parseInt(month) + 1;
+          return month + "/" + day + "/" + year;
+        }else{
+          return this.getMonthName(month) + " " + day + " " + year;
+        }
       },
       getFirstDayOfTheMonth: function(){
         var dtObj = new Date(this.year, this.month, 1);        
