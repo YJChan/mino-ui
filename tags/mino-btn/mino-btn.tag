@@ -1,6 +1,6 @@
 <mino-btn>
 <button class="btn {class}" type={type} onclick={() => onclickEvent} onmouseover={() => this.test() }>
-  {text}
+  <yield></yield> 
 </button>
 <style>
 .btn{

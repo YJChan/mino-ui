@@ -7,8 +7,8 @@
   @media (min-width: 1025px) and (max-width: 1920px) {
     .day-wrapper{
       cursor:pointer;
-      width:49px; 
-      height:35px;    
+      width:14%; 
+      height:32px;    
       display: inline-block; 
       text-align:center;
       vertical-align:middle;
@@ -21,6 +21,7 @@
 
     .active{
       background-color: #456990;
+      border-radius: 0.25em;
     }
   }
 
@@ -28,7 +29,7 @@
     .day-wrapper{
       cursor:pointer;
       width:14%;
-      height:35px;    
+      height:32px;    
       display: inline-block; 
       text-align:center;
       vertical-align:middle;
@@ -41,6 +42,7 @@
 
     .active{
       background-color: #456990;
+      border-radius: 0.25em;
     }
   }
 
@@ -48,7 +50,7 @@
     .day-wrapper{
       cursor:pointer;
       width:14%;
-      height:35px;    
+      height:32px;    
       display: inline-block; 
       text-align:center;
       vertical-align:middle;
@@ -61,36 +63,43 @@
 
     .active{
       background-color: #456990;
+      border-radius: 0.25em;
     }
   }
 
   .day-wrapper:hover{
     background-color:#ccc;
+    border-radius: 0.25em;
   }
   
   .light{
     background-color: #EEF9ED;
     color: #162115;
+    border-radius: 0.25em;
   }
 
   .warning {
     background-color: #F45B69;
     color: #EEF9ED;
+    border-radius: 0.25em;
   }
 
   .success{
     background-color: #268E47;
     color: #EEF9ED;
+    border-radius: 0.25em;
   }
 
   .primary{
     background-color: #456990;
     color: #EEF9ED;
+    border-radius: 0.25em;
   }
 
   .dark{
     background-color: #162115;
     color: #EEF9ED;
+    border-radius: 0.25em;
   }
   </style>
   <script>    
