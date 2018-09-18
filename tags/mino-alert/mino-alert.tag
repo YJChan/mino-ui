@@ -1,9 +1,8 @@
 <mino-alert>
   <div class="alert {type === 'dismiss'? 'alert-close': ''} {type === 'auto-dismiss'? 'alert-auto': ''} {class}"
-   onclick={type === 'dismiss' ? () => dismissAlert(e): ''} >{message}</div>  
+   onclick={type === 'dismiss' ? () => dismissAlert(e): ''} ><yield></yield>{message}</div>  
   <style>    
-    .alert{
-      border: 1px solid #ccc;
+    .alert{      
       border-radius: 0.2rem;
       padding: 0.5em 0.675rem;
       position: relative;
