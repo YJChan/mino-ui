@@ -1,12 +1,11 @@
 <mino-alert>
-  <div class="alert {type === 'dismiss'? 'alert-close': ''} {type === 'auto-dismiss'? 'alert-auto': ''} {class}"
+  <div class="alert {type === 'dismiss'? 'alert-close': ''} {type === 'auto-dismiss'? 'alert-auto': ''} {class} {theme}"
    onclick={type === 'dismiss' ? () => dismissAlert(e): ''} ><yield></yield>{message}</div>  
   <style>    
     .alert{      
       border-radius: 0.2rem;
       padding: 0.5em 0.675rem;
-      position: relative;
-      display: inline;    
+      position: relative;      
       margin-bottom: 1rem;  
     }
 
@@ -19,44 +18,55 @@
     }
 
     .light{
-      background-color: #EEF9ED;
-      color: #162115;
+      background-color: #f4f4f4;
+      color: #1D2F3A;
     }
 
     .warning {
-      background-color: #F45B69;
-      color: #EEF9ED;
+      background-color: #F32260;
+      color: #FCF7FA;
     }
 
     .success{
-      background-color: #268E47;
-      color: #EEF9ED;
+      background-color: #1ECE80;
+      color: #FCF7FA;
     }
 
     .primary{
       background-color: #456990;
-      color: #EEF9ED;
+      color: #FCF7FA;
     }
 
     .dark{
-      background-color: #162115;
-      color: #EEF9ED;
+      background-color: #323C46;
+      color: #FCF7FA;
     }
 
+    .note{
+      background-color: #FFD011;
+      color: #1D2F3A;
+    }
+
+    .default{
+      background-color: #989898;
+      color: #FCF7FA;
+    }      
 
   </style>
   <script>  
-    this.type = opts.type;
-    this.message = opts.message;
-    this.stay = opts.stay;
+    this.type = opts.type !== undefined? opts.type: 'display'; //dismiss or display or auto-dismiss
+    this.message = opts.message !== undefined? opts.message: ''; 
+    this.stay = opts.stay !== undefined? opts.stay: ''; //stay on screen for how long
     this.class = opts.class;
-    this.display = opts.display;
+    this.theme = opts.theme !== undefined? opts.theme: 'default';
+    this.display = opts.display; 
     var self = this;
 
     this.on('mount', function(){
       console.log('mounted');     
       
-      if(this.type === "auto-dimiss"){
+      if(this.type === "auto-dismiss"){
+        console.log('auto');
         this.autoDismiss();
       }
 
@@ -76,8 +86,7 @@
       } 
     }
 
-    function dismiss(){
-      console.log('dismiss alert');
+    function dismiss(){      
       self.unmount(true);
     }
   </script>

@@ -1,5 +1,5 @@
 <mino-date>
-  <input type="text" ref="{rname}" class="cal" onclick="{() => renderCalendar()}" value="{date}"/><br/>
+  <input type="text" ref="{rname}" class="cal {class}" onclick="{() => renderCalendar()}" value="{date}"/><br/>
   <div class="{(render || mRender || yRender) && type=== 'modal' ? 'modal-back': '' }"></div>
   <div if={render} class="{ type !== 'modal'? 'calendar': 'calendar-modal'}">
     <div class="title-wrapper">      
@@ -129,7 +129,7 @@
         margin: 25px;        
         top: 0;
         left: 6%;
-        width: 80%;
+        width: 45%;
         box-shadow: 2px 2px 2px 2px #5a5858;
       }
 
@@ -141,16 +141,18 @@
         border-radius: 0.25em;
         height: auto;
         margin: -5px -25px 20px 0px;                  
-        width: 275px;
+        width: 290px;
       }
       
       .month-title{
-        width: 55%;
+        width: 49.5%;
         display: inline-block;
         text-align:left;
         font-weight: 600;
         font-size: x-large;
         cursor:pointer;
+        border-radius: 0.2em;
+        padding: 1%;
       }
 
       .t-year-title{
@@ -159,11 +161,13 @@
         text-align:center;
         font-size: large;
         cursor:pointer;
+        border-radius: 0.2em;
+        padding: 1.5%;
       }
 
 
       .week-title{
-        width:11.25%; 
+        width:11%; 
         text-align: center;
         display:inline-block;
         padding:1%;
@@ -263,20 +267,38 @@
       color: #161125;
     }
 
-    input{
+    .input-box{
       display: inline;      
       padding: 0.2rem 0.45rem;
       font-size: 1rem;
       line-height: 1.5;
-      color: #162115;
+      color: #1D2F3A;
       background-color: #fff;
       background-clip: padding-box;
-      border: 1px solid #ced4da;
+      border: 1.35px solid #ced4da;
       border-radius: 0.2rem;
       transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
       margin: 5px;
+    }    
+
+    .input-line{
+      display: inline;      
+      padding: 0.2rem 0.45rem;
+      font-size: 1rem;
+      line-height: 1.5;
+      color: #1D2F3A;
+      background-color: #fff;
+      background-clip: padding-box;
+      border: 1.35px solid #364a4c;
+      border-top: 0;
+      border-left: 0;
+      border-right: 0;
+      border-radius: 0.2rem;
+      transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+      margin: 5px;
+      border-radius: 0;
     }
-    
+
     .title-wrapper{
       padding: 1%;
     }
@@ -376,28 +398,38 @@
     }
 
     .light{
-      background-color: #EEF9ED;
-      color: #162115;
+      background-color: #f4f4f4;
+      color: #1D2F3A;
     }
 
     .warning {
-      background-color: #F45B69;
-      color: #EEF9ED;
+      background-color: #F32260;
+      color: #FCF7FA;
     }
 
     .success{
-      background-color: #268E47;
-      color: #EEF9ED;
+      background-color: #1ECE80;
+      color: #FCF7FA;
     }
 
     .primary{
       background-color: #456990;
-      color: #EEF9ED;
+      color: #FCF7FA;
     }
 
     .dark{
-      background-color: #162115;
-      color: #EEF9ED;
+      background-color: #323C46;
+      color: #FCF7FA;
+    }
+
+    .note{
+      background-color: #FFD011;
+      color: #1D2F3A;
+    }
+
+    .default{
+      background-color: #989898;
+      color: #FCF7FA;
     }
 
     .cal{
@@ -411,25 +443,26 @@
   </style>
   <script type="text/javascript" src="./mino-date-observer.js"></script>
   <script>
-    this.type = opts.type;
-    this.day = opts.day !== undefined? opts.day: new Date().getDate();
+    this.type = opts.type; //modal or empty
+    this.day = opts.day !== undefined? opts.day: new Date().getDate(); 
     this.month = opts.month !== undefined ? opts.month: new Date().getMonth();
     this.year = opts.year !== undefined? opts.year: new Date().getFullYear();
-    this.rname = opts.rname !== undefined? opts.rname: '';    
-    this.date = opts.date !== undefined? opts.date: '';    
-    this.format = opts.format !== undefined? opts.format : "long";
-    this.daysOfMonth = 31;
+    this.rname = opts.rname !== undefined? opts.rname: '';  //ref name
+    this.date = opts.date !== undefined? opts.date: '';     //full date, accept iso, short and long format
+    this.format = opts.format !== undefined? opts.format : "long"; //define showing format
+    this.daysOfMonth = 31;  
     this.weeks = [];
     this.render = false;
     this.mRender = false;
     this.yRender = false;
-    this.theme = opts.theme !== undefined? opts.theme : "primary";
+    this.theme = opts.theme !== undefined? opts.theme : "primary";  //theme : light, dark, primary, warning, note, success, default
+    this.class = opts.class !== undefined? opts.class : "input-line";  //display class: input-line or input-box
     this.options = {
       weekStartDay: opts.weekStartDay === undefined? opts.weekStartDay: 'SUN',
       displayType: opts.displayType === undefined? opts.displayType: 'MONTH',
       format: opts.format !== undefined? opts.format : "long"
     };        
-    this.numOfYears = opts.numofyears !== undefined? opts.numofyears: 10;
+    this.numOfYears = opts.numofyears !== undefined? opts.numofyears: 10; //number of years display in selections
     riot.minoDateObserver = new minoDateObserver();
     var self = this;
 

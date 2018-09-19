@@ -1,5 +1,7 @@
 <mino-btn>
-<button class="btn {class}" type={type} onclick={() => onclickEvent} onmouseover={() => this.test() }>
+<button class="btn {theme}" ref={rname} type={type} onclick="{() => onclickEvent()}" 
+ onmouseover="{() => onhoverEvent()}"
+ ondblclick="{() => onDblClickEvent()}">
   <yield></yield> 
 </button>
 <style>
@@ -18,26 +20,6 @@
   line-height: 1.5;
   border-radius: 0.2rem;
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-}
-
-.grad.light:hover{
-  background-image: linear-gradient(to right top, #b5cbd3, #c0d7d9, #cde3df, #ddeee6, #eef9ed);
-}
-
-.grad.primary:hover {
-  background-image: linear-gradient(to right top, #051937, #152b4c, #253f62, #355379, #456990);
-}
-
-.grad.success:hover{
-  background-image: linear-gradient(to right top, #083218, #0e4723, #155e2f, #1d763b, #268e47);
-}
-
-.grad.warning:hover{
-  background-image: linear-gradient(to right top, #37050e, #611825, #902d3b, #c14352, #f45b69);
-}
-
-.grad.dark:hover{
-  background-image: linear-gradient(to right top, #162115, #23332c, #354643, #4a595b, #626d71);
 }
 
 .lg{
@@ -66,35 +48,47 @@
 }
 
 .light{
-  background-color: #EEF9ED;
-  color: #162115;
+  background-color: #f4f4f4;
+  color: #1D2F3A;
 }
 
 .warning {
-  background-color: #F45B69;
-  color: #EEF9ED;
+  background-color: #F32260;
+  color: #FCF7FA;
 }
 
 .success{
-  background-color: #268E47;
-  color: #EEF9ED;
+  background-color: #1ECE80;
+  color: #FCF7FA;
 }
 
 .primary{
   background-color: #456990;
-  color: #EEF9ED;
+  color: #FCF7FA;
 }
 
 .dark{
-  background-color: #162115;
-  color: #EEF9ED;
+  background-color: #323C46;
+  color: #FCF7FA;
 }
+
+.note{
+  background-color: #FFD011;
+  color: #1D2F3A;
+}
+
+.default{
+  background-color: #989898;
+  color: #FCF7FA;
+}             
 
 </style>
 <script>
-  this.class = opts.class;
-  this.text = opts.text;
+  this.theme = opts.theme;  
   this.type = opts.type;
-  this.onclickEvent = opts.onclick;  
+  this.rname = opts.rname;
+  this.onclickEvent = opts.onclick !== undefined? opts.onclick: function(){};
+  this.onhoverEvent = opts.onhover !== undefined? opts.onhover: function(){};
+  this.onDblClickEvent = opts.ondblclick !== undefined? opts.ondblclick: function(){};
 </script>
 </mino-btn>

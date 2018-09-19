@@ -70,35 +70,47 @@
   .day-wrapper:hover{
     background-color:#ccc;
     border-radius: 0.25em;
-  }
-  
+  }              
+
   .light{
-    background-color: #EEF9ED;
-    color: #162115;
+    background-color: #f4f4f4;
+    color: #1D2F3A;
     border-radius: 0.25em;
   }
 
   .warning {
-    background-color: #F45B69;
-    color: #EEF9ED;
+    background-color: #F32260;
+    color: #FCF7FA;
     border-radius: 0.25em;
   }
 
   .success{
-    background-color: #268E47;
-    color: #EEF9ED;
+    background-color: #1ECE80;
+    color: #FCF7FA;
     border-radius: 0.25em;
   }
 
   .primary{
     background-color: #456990;
-    color: #EEF9ED;
+    color: #FCF7FA;
     border-radius: 0.25em;
   }
 
   .dark{
-    background-color: #162115;
-    color: #EEF9ED;
+    background-color: #323C46;
+    color: #FCF7FA;
+    border-radius: 0.25em;
+  }
+
+  .note{
+    background-color: #FFD011;
+    color: #1D2F3A;
+    border-radius: 0.25em;
+  }
+
+  .default{
+    background-color: #989898;
+    color: #FCF7FA;
     border-radius: 0.25em;
   }
   </style>
