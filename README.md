@@ -57,12 +57,7 @@ If you find that Mino-ui will be helpful for your project, you are welcome to us
     theme: string
     -  'light', 'dark', 'primary', 'success', 'warning', 'note', 'default'
     type: string
-    -  'submit', 'button'
-    rname: string
-    - ref name 
-    onclick: function(){}
-    onhover: function(){}
-    ondblclick: function(){}
+    -  'submit', 'button'    
   ```
   ```html
     <mino-btn theme="primary"></mino-btn>
