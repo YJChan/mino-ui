@@ -9,8 +9,8 @@
       <div class="month-title" onclick="{() => monthYearSelection('month')}">
         {minodate.getMonthName(minodate.month)}
       </div>      
-      <button class="month-navigator" onclick="{() => minodate.prevMonth()}">&#8249;</button>
-      <button class="month-navigator" onclick="{() => minodate.nextMonth()}">&#8250;</button>      
+      <button type="button" class="month-navigator" onclick="{() => minodate.prevMonth()}">&#8249;</button>
+      <button type="button" class="month-navigator" onclick="{() => minodate.nextMonth()}">&#8250;</button>      
     </div>
     <div>
       <div class="week-title">S</div>
@@ -46,12 +46,7 @@
          onclick="{() => monthSelection(m)}">
           { month }
         </div>      
-      </div>
-      <!--  <div class="month-year-selection">
-        <div style="height:25px; padding: 20px;" each={year, y in minodate.getYearSelection(numOfYears)} id="{year}">
-          { year }
-        </div>      
-      </div>  -->
+      </div>      
     </div>
     <div style="text-align:center;" class="{theme} monthyear-close" onclick="{() => monthYearClose()}">&times; close</div>
   </div>
@@ -66,7 +61,14 @@
     </div>
     <div style="text-align:center;" class="{theme} monthyear-close" onclick="{() => monthYearClose()}">&times; close</div>
   </div>
-  <style>
+  <style>    
+    
+    :scope{
+      font-family: 'Lato', Helvetica, sans-serif;
+      color: #333447;
+      line-height: 1.5;
+    }
+    
     @media (min-width: 320px) and (max-width: 480px) { 
       .calendar-modal{
         border: 0.15em solid #b9b5b5;
@@ -94,7 +96,7 @@
       }
 
       .month-title{
-        width: 53.5%;
+        width: 52%;
         display: inline-block;
         text-align:left;
         font-weight: 600;
@@ -145,7 +147,7 @@
       }
       
       .month-title{
-        width: 49.5%;
+        width: 48%;
         display: inline-block;
         text-align:left;
         font-weight: 600;
@@ -202,7 +204,7 @@
       }
 
       .month-title{
-        width: 47.5%;
+        width: 46%;
         display: inline-block;
         text-align:left;
         font-size: x-large;
@@ -463,6 +465,7 @@
       format: opts.format !== undefined? opts.format : "long"
     };        
     this.numOfYears = opts.numofyears !== undefined? opts.numofyears: 10; //number of years display in selections
+    this.value = '';
     riot.minoDateObserver = new minoDateObserver();
     var self = this;
 
@@ -591,8 +594,7 @@
           }
         }
         this.weeks.push(week);
-      }
-      //console.log(this.weeks);
+      }      
     }
     
     setSelectedDate(dtObj){
@@ -664,9 +666,9 @@
       },
       format: "long",
       init: function(day, month, year, options, initDateType, date=null){
-        this.day = day;
-        this.month = month;
-        this.year = year;
+        this.day = parseInt(day);
+        this.month = parseInt(month);
+        this.year = parseInt(year);
         this.todayDate = new Date();
         if(initDateType === 1){
           this.dte = new Date(date);
@@ -713,6 +715,7 @@
         }else{
           self.date = this.showDate.long;
         }
+        self.value = self.date;
         self.update();
         //observable
         riot.minoDateObserver.trigger('selectedActive', {day:day});

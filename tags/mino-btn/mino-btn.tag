@@ -1,10 +1,15 @@
 <mino-btn>
-<button class="btn {theme}" ref={rname} type={type} onclick="{() => onclickEvent()}" 
- onmouseover="{() => onhoverEvent()}"
- ondblclick="{() => onDblClickEvent()}">
+<button class="btn {theme}" type={type}>
   <yield></yield> 
 </button>
 <style>
+
+:scope{
+  font-family: 'Lato', Helvetica, sans-serif;
+  color: #333447;
+  line-height: 1.5;
+}
+
 .btn{
   display: inline-block;  
   text-align: center;
@@ -86,9 +91,5 @@
 <script>
   this.theme = opts.theme;  
   this.type = opts.type;
-  this.rname = opts.rname;
-  this.onclickEvent = opts.onclick !== undefined? opts.onclick: function(){};
-  this.onhoverEvent = opts.onhover !== undefined? opts.onhover: function(){};
-  this.onDblClickEvent = opts.ondblclick !== undefined? opts.ondblclick: function(){};
 </script>
 </mino-btn>

@@ -1,23 +1,29 @@
 <mino-alert>
   <div class="alert {type === 'dismiss'? 'alert-close': ''} {type === 'auto-dismiss'? 'alert-auto': ''} {class} {theme}"
    onclick={type === 'dismiss' ? () => dismissAlert(e): ''} ><yield></yield>{message}</div>  
-  <style>    
-    .alert{      
+  <style>
+    :scope{
+      font-family: 'Lato', Helvetica, sans-serif;
+      color: #333447;
+      line-height: 1.5;
+    }
+
+    .alert {
       border-radius: 0.2rem;
       padding: 0.5em 0.675rem;
-      position: relative;      
-      margin-bottom: 1rem;  
+      position: relative;
+      margin-bottom: 1rem;
     }
 
     .alert-close {
-      cursor: pointer;  
+      cursor: pointer;
     }
 
-    .alert-block{
-      display:block;
+    .alert-block {
+      display: block;
     }
 
-    .light{
+    .light {
       background-color: #f4f4f4;
       color: #1D2F3A;
     }
@@ -27,31 +33,30 @@
       color: #FCF7FA;
     }
 
-    .success{
+    .success {
       background-color: #1ECE80;
       color: #FCF7FA;
     }
 
-    .primary{
+    .primary {
       background-color: #456990;
       color: #FCF7FA;
     }
 
-    .dark{
+    .dark {
       background-color: #323C46;
       color: #FCF7FA;
     }
 
-    .note{
+    .note {
       background-color: #FFD011;
       color: #1D2F3A;
     }
 
-    .default{
+    .default {
       background-color: #989898;
       color: #FCF7FA;
-    }      
-
+    }
   </style>
   <script>  
     this.type = opts.type !== undefined? opts.type: 'display'; //dismiss or display or auto-dismiss
