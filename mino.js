@@ -555,3 +555,31 @@ riot.tag2('mino-input', '<input ref="{name}" type="text" onclick="{()=> renderCa
       this.update();
     }.bind(this)
 });
+riot.tag2('mino-nav', '<div class="{class}"> <div class="{highlight === \'true\'? \'bar\': \'\'}"> <yield></yield> </div> </div>', '', '', function(opts) {
+    this.class = opts.class;
+    this.highlight = opts.highlight;
+
+});
+riot.tag2('mino-navbar', '<div class="navbar {theme}"> <mino-nav class="navbar-link navbar-link-brand" highlight="true"> Mino </mino-nav> <div class="navbar-link navbar-link-toggle" onclick="{() => showMenu()}"> <mino-navburger class="{burger}"></mino-navburger> </div> <nav class="navbar-items" ref="left_navbar"> <mino-nav class="navbar-link" highlight="true"> about </mino-nav> <mino-nav class="navbar-link" highlight="true"> documentation </mino-nav> <mino-nav class="navbar-link" highlight="true"> contact </mino-nav> <mino-nav class="navbar-link" highlight="true">test</mino-nav> </nav> <nav class="navbar-items navbar-items-right" ref="right_navbar"> <mino-nav class="navbar-link" highlight="true"> search </mino-nav> <mino-nav class="navbar-link" highlight="true"> <i class="bx bx-bolt"></i> </mino-nav> </nav> </div>', 'mino-navbar,[data-is="mino-navbar"]{ font-family: \'Lato\', Helvetica, sans-serif; line-height: 1.5; margin: 0; } mino-navbar .navbar,[data-is="mino-navbar"] .navbar{ display: flex; padding: 16px; font-family: sans-serif; } mino-navbar .navbar-link,[data-is="mino-navbar"] .navbar-link{ padding-right: 8px; cursor: pointer; } mino-navbar .navbar-items,[data-is="mino-navbar"] .navbar-items{ display: flex; } mino-navbar .navbar-items-right,[data-is="mino-navbar"] .navbar-items-right{ margin-left:auto; } mino-navbar .navbar-link-toggle,[data-is="mino-navbar"] .navbar-link-toggle{ display: none; } @media only screen and (max-width: 768px) { mino-navbar .navbar-items,[data-is="mino-navbar"] .navbar-items,mino-navbar .navbar,[data-is="mino-navbar"] .navbar{ flex-direction: column; } mino-navbar .navbar-items,[data-is="mino-navbar"] .navbar-items{ display:none; } mino-navbar .navbar-items-right,[data-is="mino-navbar"] .navbar-items-right{ margin-left:0; } mino-navbar .navbar-toggleshow,[data-is="mino-navbar"] .navbar-toggleshow{ display: flex; } mino-navbar .navbar-link-toggle,[data-is="mino-navbar"] .navbar-link-toggle{ align-self: flex-end; display: initial; position: absolute; cursor: pointer; } } mino-navbar .bar,[data-is="mino-navbar"] .bar{ position: relative; text-decoration: none; } mino-navbar .bar:before,[data-is="mino-navbar"] .bar:before{ content: ""; position: absolute; width: 100%; height: 2px; bottom: 0; left: 0; background-color: #1D2F3A; visibility: hidden; -webkit-transform: scaleX(0); transform: scaleX(0); -webkit-transition: all 0.3s ease-in-out 0s; transition: all 0.3s ease-in-out 0s; } mino-navbar .bar:hover:before,[data-is="mino-navbar"] .bar:hover:before{ visibility: visible; -webkit-transform: scaleX(1); transform: scaleX(1); } mino-navbar .light,[data-is="mino-navbar"] .light{ background-color: #f4f4f4; color: #1D2F3A; } mino-navbar .warning,[data-is="mino-navbar"] .warning{ background-color: #F32260; color: #FCF7FA; } mino-navbar .success,[data-is="mino-navbar"] .success{ background-color: #1ECE80; color: #FCF7FA; } mino-navbar .primary,[data-is="mino-navbar"] .primary{ background-color: #456990; color: #FCF7FA; } mino-navbar .dark,[data-is="mino-navbar"] .dark{ background-color: #323C46; color: #FCF7FA; } mino-navbar .note,[data-is="mino-navbar"] .note{ background-color: #FFD011; color: #1D2F3A; } mino-navbar .default,[data-is="mino-navbar"] .default{ background-color: #989898; color: #FCF7FA; } mino-navbar .transparent,[data-is="mino-navbar"] .transparent{ background-color:transparent; color: #1D2F3A; }', '', function(opts) {
+    this.theme = opts.theme !== undefined? opts.theme: 'transparent';
+    this.burger = opts.burger !== undefined? opts.burger: 'dark';
+
+    this.showMenu = function() {
+      var l_navbar = this.refs.left_navbar;
+      var r_navbar = this.refs.right_navbar;
+      if(l_navbar.className.indexOf("navbar-toggleshow") > -1){
+        l_navbar.classList.remove('navbar-toggleshow');
+      }else{
+        l_navbar.classList.add('navbar-toggleshow');
+      }
+      if(r_navbar.className.indexOf("navbar-toggleshow") > -1){
+        r_navbar.classList.remove('navbar-toggleshow');
+      }else{
+        r_navbar.classList.add('navbar-toggleshow');
+      }
+    }.bind(this)
+
+});
+riot.tag2('mino-navburger', '<div class="{class}"></div> <div class="{class}"></div> <div class="{class}"></div>', 'mino-navburger div,[data-is="mino-navburger"] div{ width: 24px; height: 3px; margin: 4px 0; }', '', function(opts) {
+    this.class = opts.class !== undefined? opts.class: 'dark';
+});
