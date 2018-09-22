@@ -25,6 +25,27 @@
       }
     }
 
+    @media (min-width: 481px) and (max-width: 767px) {
+      .day-wrapper{
+        cursor:pointer;
+        width:14%;
+        height:32px;    
+        display: inline-block; 
+        text-align:center;
+        vertical-align:middle;
+        line-height:2;
+      }
+
+      .not-in-month{
+        color: #bbb;  
+      }
+
+      .active{
+        background-color: #456990;
+        border-radius: 0.25em;
+      }
+    }
+
     @media (min-width: 768px) and (max-width: 1024px) {
       .day-wrapper{
         cursor:pointer;

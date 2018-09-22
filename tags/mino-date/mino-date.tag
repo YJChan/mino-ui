@@ -120,6 +120,62 @@
       }
     }
     
+    @media (min-width: 481px) and (max-width: 767px) {
+      .calendar-modal{
+        border: 0.15em solid #b9b5b5;
+        display: inline-block;     
+        position: absolute;
+        background: #f3f3f3;        
+        border-radius: 0.25em;
+        height: auto;
+        margin: 25px;        
+        top: 0;
+        left: 6%;
+        width: 45%;
+        box-shadow: 2px 2px 2px 2px #5a5858;
+      }
+
+      .calendar{
+        border: 0.15em solid #b9b5b5;
+        display: inline-block;     
+        position: absolute;
+        background: #f3f3f3;        
+        border-radius: 0.25em;
+        height: auto;
+        margin: -5px -25px 20px 0px;                  
+        width: 290px;
+      }
+      
+      .month-title{
+        width: 48%;
+        display: inline-block;
+        text-align:left;
+        font-weight: 600;
+        font-size: x-large;
+        cursor:pointer;
+        border-radius: 0.2em;
+        padding: 1%;
+      }
+
+      .t-year-title{
+        width: 19.5%;
+        display: inline-block;
+        text-align:center;
+        font-size: large;
+        cursor:pointer;
+        border-radius: 0.2em;
+        padding: 1.5%;
+      }
+
+
+      .week-title{
+        width:10.5%; 
+        text-align: center;
+        display:inline-block;
+        padding:1%;
+      }
+    }
+
     @media (min-width: 768px) and (max-width: 1024px) {
       .calendar-modal{
         border: 0.15em solid #b9b5b5;
@@ -225,7 +281,7 @@
       }
 
       .week-title{
-        width:11.5%; 
+        width:11%; 
         text-align: center;
         display:inline-block;
         padding:1%;
@@ -253,7 +309,7 @@
     .action-wrapper{
       box-sizing: border-box;
       display: inline-block;
-      width: 32.5%;
+      width: 32%;
       padding: 4px;
       text-decoration: none;
       color: inherit;
